@@ -52,10 +52,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyNotes.EntityLayer\MyNotes.EntityLayer.csproj">
+      <Project>{364680bc-21ef-4f80-8dd6-867121ae2e8d}</Project>
+      <Name>MyNotes.EntityLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyNotesDataAccessLayer\MyNotes.DataAccessLayer.csproj">
+      <Project>{911ffaf1-3354-4071-9ea6-6da04ad7089b}</Project>
+      <Name>MyNotes.DataAccessLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
