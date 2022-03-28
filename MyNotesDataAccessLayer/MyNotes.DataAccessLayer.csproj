@@ -54,15 +54,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseRepository.cs" />
     <Compile Include="MyInitializer.cs" />
     <Compile Include="MyNoteContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyNotes.CoreLayer\MyNotes.CoreLayer.csproj">
+      <Project>{2D4181C8-8027-4463-806B-F5F04E6ACC4B}</Project>
+      <Name>MyNotes.CoreLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyNotes.EntityLayer\MyNotes.EntityLayer.csproj">
       <Project>{364680bc-21ef-4f80-8dd6-867121ae2e8d}</Project>
       <Name>MyNotes.EntityLayer</Name>
