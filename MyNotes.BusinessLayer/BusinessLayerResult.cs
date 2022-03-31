@@ -12,7 +12,7 @@ namespace MyNotes.BusinessLayer
     {
         public List<ErrorMessageObj> Errors { get; set; } 
 
-        public T Result { get; set; }
+        public T Result { get; set; } //BusinessLAyerResult un 2 tip dönüş değeri var
 
         public BusinessLayerResult()
         {
