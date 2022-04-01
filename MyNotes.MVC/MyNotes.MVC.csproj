@@ -152,6 +152,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Login-RegisterStyle.css" />
     <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -200,9 +201,11 @@
     <Content Include="Views\Comment\Index.cshtml" />
     <Content Include="Views\Shared\_PartialComments.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

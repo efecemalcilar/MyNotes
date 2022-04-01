@@ -3,13 +3,13 @@
 @{
     ViewBag.Title = "Login";
 }
-
+<link href="~/Content/Login-RegisterStyle.css" rel="stylesheet" />
 @using (Html.BeginForm())
 {
-    <div class="logreg">
+    <div class="logreg mt-5 pt-5">
         <main class="form-signin">
             <form>
-                <img class="mb-4 rounded-circle" src="~/images/muhammed.jpg" alt="test" width="144" height="120">
+                <img class="mb-4 rounded-circle" src="../Images/userphoto.jpg" alt="test" width="144" height="120">
                 <h1 class="h3 mb-3 fw-normal">Giris Formu</h1>
                 @Html.ValidationSummary(false)
 
@@ -42,4 +42,18 @@
 
     </div>
 }
+
+
+<script src="~/Scripts/jquery-3.6.0.js"></script>
+<script>
+    $(document).ready(function() {
+        $("header").hide();
+        $("footer").hide();
+        $("#category2").hide();
+        $("#category3").removeClass("col-md-9").addClass("col-md text-center d-flex justify-content-center");
+        $("body").addClass("bg-warning") 
+
+
+    });
+</script>
 

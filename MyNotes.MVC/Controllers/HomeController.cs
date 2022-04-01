@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MyNotes.BusinessLayer;
+using MyNotes.BusinessLayer.Models;
 using MyNotes.BusinessLayer.ValueObject;
 using MyNotes.EntityLayer;
 using MyNotes.EntityLayer.Messages;
@@ -22,6 +23,7 @@ namespace MyNotes.MVC.Controllers
             return View();
         }
 
+        
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
@@ -39,7 +41,8 @@ namespace MyNotes.MVC.Controllers
                     return View(model);
                 }
 
-                Session["Login"] = res.Result; // Eğer bir hata yoksa result daki bilgileri login e taşı. Result içinde username password bilgisi var.
+                //Session["Login"] = res.Result; // Eğer bir hata yoksa result daki bilgileri login e taşı. Result içinde username password bilgisi var.
+                CurrentSession.Set("Login",res.Result);
                 return RedirectToAction("Index"); // Beni Login view'inden İndex View ine ışınlayacak
 
             }
@@ -47,6 +50,11 @@ namespace MyNotes.MVC.Controllers
             return View(model);
         }
 
+
+        public ActionResult Register()
+        {
+            return View();
+        }
 
         public ActionResult Index()
         {
@@ -66,6 +74,14 @@ namespace MyNotes.MVC.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult LogOut()
+        {
+            
+            //Session.Clear();
+            CurrentSession.Clear();
+            return RedirectToAction("Index");
         }
     }
 }
