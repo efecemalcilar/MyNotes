@@ -1,13 +1,15 @@
-﻿@using MyNotes.BusinessLayer
+﻿
+@using MyNotes.BusinessLayer.Models
 
 @{
-    CommandMaanager cm = new CommandMaanager();
-    var list = cm.List();
+    //CommandMaanager cm = new CommandMaanager();
+    //var list = cm.List();
+    var user = CurrentSession.User;
 
 
 }
 
-@foreach (var item in list)
+@foreach (var item in Model)
 {
     @*.d-flex.border.border-danger.mb-1>.flex-sharink-0.mt3>i.bi.bi-chat-left-dots-fill.text-danger.ms-3*@
 
@@ -19,18 +21,22 @@
 
             @*span.col-md-9.fs-6#comment_text_@item.Id*@
 
-            <span id="comment_text_@item.Id" class="col-md-9 fs-6" contenteditable="false">
-                @item.Text
-            </span>
-            <span class="cold-md-3">
+            <span id="comment_text_@item.Id" class="col-md-9 fs-6" contenteditable="false">@item.Text</span>
+            @if (user != null && user.Id == item.Owner.Id)
+            {
+                <span class="col-md-3">
+                    <button type="button" class="btn btn-warning btn-sm mt-2" data-edit-mode="false" onclick="doComment(this, 'edit_clicked', @item.Id, '#comment_text_@item.Id')">
+                        <span class="bi bi-pencil"></span>
+                    </button>
 
-                @*button.btn.btn-warning.btn-sm.mt-2*@
+                    <button type="button" class="btn btn-danger btn-sm mt-2"  onclick="doComment(this, 'delete_clicked', @item.Id)">
+                        <span class="bi bi-trash"></span>
+                    </button>
 
-                <button class="btn btn-warning btn-sm mt-2"></button>
+                </span>
 
-                <!--Buraya sonra ekleme yapmayı unutma-->
+            }
 
-            </span>
             <small class="col-md-12">
                 <span class="bi bi-clock"></span>@item.ModifiedOn &nbsp;&nbsp; <!--nbsp Boşluk atıyor-->
                 <span class="bi bi-user"></span>@item.Owner.UserName <!--Bilgileri UserName den alacak-->
@@ -40,3 +46,26 @@
     </div>
 }
 
+<div class="row">
+    <div class="col-md-12">
+        <hr/>
+    </div>
+</div>
+
+@if (user != null)
+{
+<div class="row">
+    <div class="col-md-12">
+        <div class="input-group mb-3">
+            <input type="text" id="new_comment-text" placeholder="Yorumumuz" class="form-control" />
+            <span class="input-group-text" id="basic-addon2">
+                <button class="btn btn-success" onclick="doComment(this, 'new_clicked', -1)">
+                    <span class="far fa-paper-plane"></span> Gonder
+                </button>
+            </span>
+        </div>
+    </div>
+
+</div>
+}
+ 

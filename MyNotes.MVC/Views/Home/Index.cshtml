@@ -84,8 +84,8 @@
 <script src="../../Scripts/jquery-3.6.0.min.js"></script>
 
 <script>
-    let noteId = -1; // Artık noteId nin bir number oldugunu söylüyor. Burda type sabit let dediken sonra noteId artık -1 dir.
-    let modalCommentBodyId = "#modal_comment_body";
+    var noteId = -1; // Artık noteId nin bir number oldugunu söylüyor. Burda type sabit let dediken sonra noteId artık -1 dir.
+    var modalCommentBodyId = "#modal_comment_body";
 
     $(function() {
         $('#modal_comment').on('show.bs.modal',
@@ -98,6 +98,53 @@
 
             });
     });
+
+    function doComment(btn, e, commentId, spanId) { // Amaç Bir Butonun enable özelliğini acip kapatmak.
+        var button = $(btn);
+        var mode = button.data('edit-mode');
+        if (e === 'edit_clicked') {
+            if (!mode) {
+                button.data('edit-mode', true);
+                button.removeClass('btn-warning'); //warning sari rengi verir .
+                button.addClass('btn-success'); // Sari rengi kaldırıp yeşili ver demektir.
+                var btnSpan = button.find('span'); // Buttonun içerisinde ki span tag ini bulmasını soyluyorum
+                btnSpan.removeClass('bi-pencil'); // Bu span tagını Class ını remove edip, yerine check ikonu koy.
+                btnSpan.addClass('bi-check'); // pencil check e döndü
+                $(spanId).addClass('editable'); // Editable izni vermek icin oraya bir tane class oluşturudum 
+                $(spanId).attr('contenteditable', true);
+                $(spanId).focus();
+            } else {
+                button.data('edit-mode', false);
+                button.removeClass('btn-success');
+                button.addClass('btn-warning');
+                var btnSpan = button.find('span');
+                btnSpan.removeClass('bi-check');
+                btnSpan.addClass('bi-pencil');
+                $(spanId).addClass('editable');
+                $(spanId).attr('contenteditable', false);
+                $(spanId).focus();
+
+                var txt = $(spanId).text();
+                console.log(txt);
+                $.ajax({
+                    method: "POST",
+                    url: "/Comment/Edit/" + commentId, //edit action u tetiklenecek bu tetiklenirken yanında comment 
+                    data: { text: txt }                 // götürecek.
+                }).done(function (data) {
+                    if (data.result) {
+                        //yorumlari tekrar yukleme
+                        $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteId);
+                        
+                    } else {
+                        alert("Yorumunuz Guncellenemedi.");
+                    }
+                }).fail(function () {
+                    alert("Sunucu ile baglanti kurulamadi.");
+                });
+            }
+        }
+    }
+
     
 </script>
 
