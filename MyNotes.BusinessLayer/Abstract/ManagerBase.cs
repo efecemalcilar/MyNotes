@@ -17,7 +17,7 @@ namespace MyNotes.BusinessLayer.Abstract
 
         public int Delete(T entity)
         {
-            throw new NotImplementedException();
+            return repo.Delete(entity);
         }
 
         public T Find(Expression<Func<T, bool>> predicate)

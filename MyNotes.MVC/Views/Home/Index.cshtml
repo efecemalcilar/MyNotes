@@ -113,7 +113,8 @@
                 $(spanId).addClass('editable'); // Editable izni vermek icin oraya bir tane class oluşturudum 
                 $(spanId).attr('contenteditable', true);
                 $(spanId).focus();
-            } else {
+            }
+            else {
                 button.data('edit-mode', false);
                 button.removeClass('btn-success');
                 button.addClass('btn-warning');
@@ -135,14 +136,64 @@
                         //yorumlari tekrar yukleme
                         $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteId);
                         
-                    } else {
+                    }
+                    else {
                         alert("Yorumunuz Guncellenemedi.");
                     }
                 }).fail(function () {
                     alert("Sunucu ile baglanti kurulamadi.");
                 });
+
             }
+
+            
         }
+        else if (e === "delete_clicked") {
+            var dialog_res = confirm("Yorum silinsin mi ?");
+         
+            if (!dialog_res) {
+                return false;
+            }
+
+            $.ajax({
+                method: "GET",
+                url:"/Comment/Delete/"+ commentId
+            }).done(function(data) {
+                if (data.result) {
+                    $(modalCommentBodyId).load("/Comment/ShowNoteComment/" + noteId);
+                    
+                }
+                else {
+                    alert("Yorum Silinsin mi?");
+                }
+            }).fail(function() {
+                alert("sunucu ile baglanti kurulamadi");
+            })
+        }
+        else if (e ==="#new_clicked") {
+            var txt = $("#new_comment_text").val(); //txt verisini comment alaanında ki text den alacak.
+            /*console.log("txt :" +txt);*/
+            //var txt1 = $("#new_comment_text").text();
+            //console.log("txt1 :" + txt1);
+
+
+            $.ajax({
+                method: "POST",
+                url: "/Comment/Create",
+                data: { "text": txt, "nodeid ": noteId } //Instant name atamasi yaptik.
+
+            }).done(function(data) {
+                console.log(data);
+                if (data.result) {
+                    //yorumlari tekrar yukleme
+                    $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteId);
+
+                } else {
+                    alert("Yorumunuz Guncellenemedi.");
+                }
+            }).fail(function() {
+                alert("Sunucu ile baglanti kurulamadi.");
+            });
     }
 
     

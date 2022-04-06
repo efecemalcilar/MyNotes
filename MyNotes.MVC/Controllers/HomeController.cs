@@ -50,11 +50,34 @@ namespace MyNotes.MVC.Controllers
             return View(model);
         }
 
-
         public ActionResult Register()
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                MyNotesUserManager mum = new MyNotesUserManager();
+                BusinessLayerResult<MyNotesUser> res = mum.RegisterUser(model);
+                if (res.Errors.Count>0)
+                {
+                    res.Errors.ForEach(s=>ModelState.AddModelError("",s.Message));
+                    return View(model);
+                }
+
+                RedirectToAction("Login");
+            }
+
+            return View(model);
+        }
+
+       
+
+        
+
 
         public ActionResult Index()
         {

@@ -52,7 +52,7 @@ namespace MyNotes.MVC.Controllers
 
         
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Create(Comment comment,int? noteId) //Create in amacı yoruma tıkladığımızda ilgili notun Id si ile gelsin ki ben onu oluşturayım.
         {
             ModelState.Remove("CreatedOn");
@@ -144,10 +144,10 @@ namespace MyNotes.MVC.Controllers
 
             if (cm.Delete(comment) > 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return Json(new {result=true} , JsonRequestBehavior.AllowGet);
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            return Json(new {result = false}, JsonRequestBehavior.AllowGet);
         }
 
         
