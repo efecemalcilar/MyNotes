@@ -13,6 +13,8 @@ namespace MyNotes.EntityLayer
     {
         public int Id { get; set; } //Buraya daha fazla property yazmadık cunkü bunu nav property getirecek
 
+        
+
         public virtual Note Note { get; set; }
         public virtual MyNotesUser LikedUser { get; set; } //Beğenen kişi
 
