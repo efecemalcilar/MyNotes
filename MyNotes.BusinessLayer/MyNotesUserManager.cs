@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using MyNotes.BusinessLayer.Abstract;
@@ -48,8 +50,8 @@ namespace MyNotes.BusinessLayer
 
         public BusinessLayerResult<MyNotesUser> RegisterUser(RegisterViewModel data)
         {
-            MyNotesUser user = Find(s => s.UserName == data.UserName || s.Email==data.Email);
-            
+            MyNotesUser user = Find(s => s.UserName == data.UserName );
+            //|| s.Email==data.Email
             if (user!= null)
             {
                 if (user.UserName == data.UserName)
@@ -57,10 +59,10 @@ namespace MyNotes.BusinessLayer
                     res.AddError(ErrorMessageCode.UserNameAlreadyExist, "Bu kullanici adi daha önce alinmis");
                 }
 
-                if (user.Email == data.Email)
-                {
-                    res.AddError(ErrorMessageCode.EmailAlreadyExist,"Bu email adresi daha önce alinmis");
-                }
+                //if (user.Email == data.Email)
+                //{
+                //    res.AddError(ErrorMessageCode.EmailAlreadyExist, "Bu email adresi daha önce alinmis");
+                //}
             }
             else
             {
@@ -90,6 +92,34 @@ namespace MyNotes.BusinessLayer
             }
 
             return res;
+        }
+
+
+        public BusinessLayerResult<MyNotesUser> ActivateUser(Guid id)
+        {
+            res.Result = Find(s => s.ActivateGuid == id);
+
+            if (res.Result != null)
+            {
+                if (res.Result.IsActive)
+                {
+                    res.AddError(ErrorMessageCode.UserAlreadyActive,"Kullanici zaten aktif");
+                    return res;
+                }
+                res.Result.IsActive = true;
+                Update(res.Result);
+            }
+            else
+            {
+                res.AddError(ErrorMessageCode.ActivateIdDoesNotExist," Boyle Bir aktivasyon kodu yoktur");
+                
+            }
+
+            return res;
+
+
+
+
         }
     }
 }

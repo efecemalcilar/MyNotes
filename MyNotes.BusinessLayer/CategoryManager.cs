@@ -8,7 +8,7 @@ using MyNotes.EntityLayer;
 
 namespace MyNotes.BusinessLayer
 {
-    public class CategoryManager : ManagerBase<Category>
+    public class CategoryManager : ManagerBase<Category> // Category e tıkladığımda notları gelsin istiyorum.
     {
         
     }

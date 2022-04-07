@@ -1,60 +1,70 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using MyNotes.BusinessLayer;
+﻿using MyNotes.BusinessLayer;
 using MyNotes.BusinessLayer.Models;
 using MyNotes.BusinessLayer.ValueObject;
 using MyNotes.EntityLayer;
+using MyNotes.MVC.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Web;
+using System.Web.Mvc;
 using MyNotes.EntityLayer.Messages;
-
 
 namespace MyNotes.MVC.Controllers
 {
     public class HomeController : Controller
     {
         private readonly MyNotesUserManager mum = new MyNotesUserManager();
-
+        private readonly NoteManager nm = new NoteManager();
         private BusinessLayerResult<MyNotesUser> res;
 
+        public ActionResult ByCategoryId(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            List<Note> notes = nm.QList().Where(s => s.Category.Id == id && s.isDraft == false)
+                .OrderByDescending(s => s.ModifiedOn)
+                .ToList(); // IsDraft yayınlansın mı yayınlanmasın mı? isDraft Taslak demek. True yaparsam bu bir taslak yayınlama dicem.
+           
+            return View("Index", notes); //Olan bir view kullanacağım yeni bir view oluşturmak istemiyorum
+        }
         public ActionResult Login()
         {
             return View();
         }
-
-        
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
                 res = mum.LoginUser(model);
-
-                if (res.Errors.Count>0)
+                if (res.Errors.Count > 0)
                 {
-                    if (res.Errors.Find(x => x.Code == ErrorMessageCode.UserIsNotActive) != null)
+                    if (res.Errors.Find(x => x.Code == EntityLayer.Messages.ErrorMessageCode.UserIsNotActive) != null)
                     {
-                        ViewBag.SetLink = "http..//Home/UserActive/1234-2345-3456789";
+                        ViewBag.SetLink = "http://Home/UserActivate/1234-2345-3456789";
+
                     }
-                    res.Errors.ForEach(s=>ModelState.AddModelError("",s.Message));
+                    res.Errors.ForEach(s => ModelState.AddModelError("", s.Message));
                     return View(model);
                 }
-
-                //Session["Login"] = res.Result; // Eğer bir hata yoksa result daki bilgileri login e taşı. Result içinde username password bilgisi var.
-                CurrentSession.Set("Login",res.Result);
-                return RedirectToAction("Index"); // Beni Login view'inden İndex View ine ışınlayacak
+                //Session["Login"] = res.Result;
+                CurrentSession.Set("Login", res.Result);
+                return RedirectToAction("Index");
 
             }
-
             return View(model);
-        }
 
+        }
         public ActionResult Register()
         {
             return View();
         }
-
         [HttpPost]
         public ActionResult Register(RegisterViewModel model)
         {
@@ -62,27 +72,61 @@ namespace MyNotes.MVC.Controllers
             {
                 MyNotesUserManager mum = new MyNotesUserManager();
                 BusinessLayerResult<MyNotesUser> res = mum.RegisterUser(model);
-                if (res.Errors.Count>0)
+                if (res.Errors.Count > 0)
                 {
-                    res.Errors.ForEach(s=>ModelState.AddModelError("",s.Message));
+                    res.Errors.ForEach(s => ModelState.AddModelError("", s.Message));
                     return View(model);
+
                 }
-
-                RedirectToAction("Login");
+                OkViewModel notifyObj = new OkViewModel()
+                {
+                    Title = "Kayıt Başarılı",
+                    RedirectingUrl = "/Home/Login"
+                };
+                
+                notifyObj.Items.Add("Lütfen e-posta adresinize gönderdigimiz aktivaasyon linkine tıklayarak hesabınızı aktive ediniz ");
+               
+                return View("Ok", notifyObj);
+                //return RedirectToAction("Login");
             }
-
             return View(model);
         }
+        public ActionResult RegisterOk()
+        {
+            return View();
+        }
 
-       
+        public ActionResult UserActivate(Guid id)
+        {
+            res = mum.ActivateUser(id);
+            
+            if (res.Errors.Count>0)
+            {
+                TempData["errors"] = res.Errors;
+                return RedirectToAction("UserActivateCancel");
+            }
 
-        
+            return RedirectToAction("UserActivateOk");
+        }
 
+        public ActionResult UserActivateOk()
+        {
+            return View();
+        }
 
+        public ActionResult UserActivateCancel()
+        {
+            List<ErrorMessageObj> errors = null;
+            if (TempData["errors"] != null)
+            {
+                errors = TempData["errors"] as List<ErrorMessageObj>;
+            }
+            return View(errors);
+        }
         public ActionResult Index()
         {
-            Test test = new Test();
-            return View();
+            //Test test = new Test();
+            return View(nm.QList().OrderByDescending(s =>s.ModifiedOn).ToList()); //Sayfanın sağındakilere tıklayınca sıralı gelmesini sağlayan kod budur.
         }
 
         public ActionResult About()
@@ -98,11 +142,9 @@ namespace MyNotes.MVC.Controllers
 
             return View();
         }
-
         public ActionResult LogOut()
         {
-            
-            //Session.Clear();
+            Session.Clear();
             CurrentSession.Clear();
             return RedirectToAction("Index");
         }
