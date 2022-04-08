@@ -20,7 +20,6 @@
 
 
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!"></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-wrench"></i>Yonetim</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -31,8 +30,8 @@
                             @if (user.IsAdmin == true)
                             {
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Kategori Ekle</a></li>
-                                <li><a class="dropdown-item" href="#!">Kategoriler</a></li>
+                                <li><a class="dropdown-item" href="/Category/Create">Kategori Ekle</a></li>
+                                <li><a class="dropdown-item" href="/Category/Index">Kategoriler</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="#!">Kullanıcı Ekle</a></li>
                                 <li><a class="dropdown-item" href="#!">Kullanıcılar</a></li>

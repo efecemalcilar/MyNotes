@@ -1,12 +1,13 @@
 ﻿
 @using MyNotes.BusinessLayer
+@using MyNotes.BusinessLayer.Models
 @*@using MyNotes.EntityLayer*@
 @*@using MyNotes.MVC.Models*@
 
 @{
     CategoryManager cm = new CategoryManager();
     //List<Category> list = cm.List();
-    var list = cm.List();
+    var list = CacheHelper.GetCategoriesFromCache();
 }
 
 <div id="category1">

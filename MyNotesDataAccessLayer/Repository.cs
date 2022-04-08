@@ -42,7 +42,7 @@ namespace MyNotesDataAccessLayer
             if (entity is BaseEntity)
             {
                 BaseEntity o = entity as BaseEntity; //Burayı newlediğim anda verileri kaybediyorum çünkü datayı sıfırlamış olacaktım.Burada BaseEntity den o nesnesini al diyor.
-                o.ModifiedUserName = "system";
+                o.ModifiedUserName = App.Common.GetCurrentUsername();
                 o.ModifiedOn = DateTime.Now;
                 o.CreatedOn= DateTime.Now;
 
