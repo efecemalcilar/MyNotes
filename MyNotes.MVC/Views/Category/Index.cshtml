@@ -1,0 +1,52 @@
+﻿
+@model IEnumerable<MyNotes.EntityLayer.Category>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Category</h2>
+<p>
+    
+    <a href="/Category/Create" class="btn btn-primary">Yeni Kayıt</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Tittle)</th>
+        <th>@Html.DisplayNameFor(model => model.Description)</th>
+        <th>Durum</th>
+        
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Tittle)</td>
+
+            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            <td class="d-flex justify-content-evenly">
+                @Bootstrap.LinkButton("/Category/Edit/" + @item.Id, "warning", "btn-sm me-4 ms-4", "Guncelle", "", "bi bi-pencil", string.Empty)
+
+                @Bootstrap.LinkButton("/Category/Details/" + @item.Id, "primary", "btn-sm me-4 ms-4", "Detaylar", String.Empty, "bi bi-search", string.Empty)
+
+                @Bootstrap.LinkButton("/Category/Delete/" + @item.Id, "danger", "btn-sm me-4 ms-4", "Sil", String.Empty, "bi bi-trash", string.Empty)
+
+
+                @*<a href="/Category/Edit/@item.Id" class="btn btn-warning" title="Guncelle"><i class="bi bi-pencil"></i></a>*@
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id })*@ 
+                @*@Html.ActionLink("Details", "Details", new { id = item.Id })*@
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+            </td>
+        </tr>
+
+        }
+
+
+
+    </tbody>
+    
+</table>
+

@@ -40,6 +40,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FakeData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeData.1.0.0\lib\FakeData.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -51,14 +54,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseRepository.cs" />
+    <Compile Include="MyInitializer.cs" />
     <Compile Include="MyNoteContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyNotes.Common\MyNotes.Common.csproj">
+      <Project>{9B82FB58-1E95-415C-B6C6-FE90844EAF12}</Project>
+      <Name>MyNotes.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyNotes.CoreLayer\MyNotes.CoreLayer.csproj">
+      <Project>{2D4181C8-8027-4463-806B-F5F04E6ACC4B}</Project>
+      <Name>MyNotes.CoreLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyNotes.EntityLayer\MyNotes.EntityLayer.csproj">
       <Project>{364680bc-21ef-4f80-8dd6-867121ae2e8d}</Project>
       <Name>MyNotes.EntityLayer</Name>

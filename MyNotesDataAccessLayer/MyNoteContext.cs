@@ -18,7 +18,7 @@ namespace MyNotesDataAccessLayer
 
         public MyNoteContext():base("SqlConDb") //Burası Constructer
         {
-
+            Database.SetInitializer(new MyInitializer()); //Initializer ı tetiklemek içindir.
         }
     }
 }
