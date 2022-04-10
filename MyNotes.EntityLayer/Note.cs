@@ -20,12 +20,12 @@ namespace MyNotes.EntityLayer
 
         public int LikeCount { get; set; } // Yazdığım yorumun almış oldugu beğeni sayısını takipedecek.
 
-        
+        public int? CategoryId { get; set; }
         
 
         public virtual MyNotesUser Owner { get; set; }  //Notelarım user la bağlantılı olacak, virtual ezme için kullanılır (Ekstra özellik katabilmek içn). MyNotesUser classına gidip Owner ekliycek.
 
-
+        [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
 
         public virtual List<Comment> Comments { get; set; } = new List<Comment>();

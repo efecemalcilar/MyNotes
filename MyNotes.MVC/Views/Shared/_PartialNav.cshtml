@@ -1,6 +1,4 @@
-﻿@using MyNotes.EntityLayer
-@using System.Collections
-@using MyNotes.BusinessLayer
+﻿
 @using MyNotes.BusinessLayer.Models
 @{
 //MyNotesUser user = null;
@@ -11,7 +9,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">My Notes 102</a>
+        <a class="navbar-brand" href="/Home/Index">My Notes 102</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -23,18 +21,18 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-wrench"></i>Yonetim</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">Not Ekle</a></li>
+                            <li><a class="dropdown-item" href="/Note/Create">Not Ekle</a></li>
                             <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="#!">Notlarım</a></li>
-                            <li><a class="dropdown-item" href="#!">Beğendiklerim</a></li>
+                            <li><a class="dropdown-item" href="/Note/Index">Notlarım</a></li>
+                            <li><a class="dropdown-item" href="/Note/MyLikedNotes/">Beğendiklerim</a></li>
                             @if (user.IsAdmin == true)
                             {
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="/Category/Create">Kategori Ekle</a></li>
                                 <li><a class="dropdown-item" href="/Category/Index">Kategoriler</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Kullanıcı Ekle</a></li>
-                                <li><a class="dropdown-item" href="#!">Kullanıcılar</a></li>
+                                <li><a class="dropdown-item" href="/MyNotesUser/Create">Kullanıcı Ekle</a></li>
+                                <li><a class="dropdown-item" href="/MyNotesUser/Index">Kullanıcılar</a></li>
 
                             }
 
@@ -74,12 +72,12 @@
                 else
                 {
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-wrench"></i>@user.UserName</a>
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="/Home/ShowProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-wrench"></i>@user.UserName</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">Profil Goster</a></li>
+                            <li><a class="dropdown-item" href="/Home/ShowProfile">Profil Goster</a></li>
                             <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="#!">Profil Duzenle</a></li>
-                            <li><a class="dropdown-item" href="#!" onclick="return confirm('Hesabinizi Silmek istediginize Eminmisiniz?')">Profil Sil</a></li>
+                            <li><a class="dropdown-item" href="/Home/EditProfile">Profil Duzenle</a></li>
+                            <li><a class="dropdown-item" href="/Home/DeleteProfile" onclick="return confirm('Hesabinizi Silmek istediginize Eminmisiniz?')">Profil Sil</a></li>
 
                         </ul>
                     </li>

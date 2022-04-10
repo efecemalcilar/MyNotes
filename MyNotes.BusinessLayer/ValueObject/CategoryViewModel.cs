@@ -8,7 +8,7 @@ using MyNotes.EntityLayer;
 
 namespace MyNotes.BusinessLayer.ValueObject
 {
-    public class CategoryViewModel
+    public class  CategoryViewModel
     {
         public Category Category { get; set; } = new Category();
 

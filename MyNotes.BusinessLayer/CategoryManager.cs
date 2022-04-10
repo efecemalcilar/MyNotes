@@ -31,6 +31,22 @@ namespace MyNotes.BusinessLayer
             return repo.Insert(entity);
         }
 
+
+        public int UpdateCat(CategoryViewModel cat)
+        {
+            Category entity = repo.Find(s =>s.Id ==cat.Category.Id) /*new Category();*/
+            /*entity.Id = cat.Category.Id*/;
+            entity.Tittle = cat.Category.Tittle;
+            entity.Description = cat.Category.Description;
+            //entity.CreatedOn = cat.Category.CreatedOn;
+            //entity.ModifiedOn = cat.Category.ModifiedOn;
+            //entity.ModifiedUserName = cat.Category.ModifiedUserName;
+            return repo.Update(entity);
+
+        }
+        
+
+        
         public CategoryViewModel FindCat(int? id)
         {
 
@@ -50,6 +66,25 @@ namespace MyNotes.BusinessLayer
 
 
             return cvm;
+        }
+
+        public CategoryViewModel GetEditCat(int? id)
+        {
+            var cat = repo.QList().FirstOrDefault(x => x.Id == id);
+
+            CategoryViewModel cvm = new CategoryViewModel();
+            cvm.Category.Id = cat.Id; cvm.Category.Tittle = cat.Tittle;
+            cvm.Category.Description = cat.Description;
+            cvm.Category.CreatedOn = cat.CreatedOn;
+            cvm.Category.ModifiedUserName = cat.ModifiedUserName;
+            cvm.Category.ModifiedOn = cat.ModifiedOn;
+            return cvm;
+        }
+
+        public int DeleteCat(int? id)
+        {
+            //Category cat = repo.Find(s => s.Id == id);
+            return repo.Delete(repo.Find(s=>s.Id == id));
         }
     }
 }
