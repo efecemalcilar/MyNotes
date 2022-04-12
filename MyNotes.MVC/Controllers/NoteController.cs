@@ -29,6 +29,12 @@ namespace MyNotes.MVC.Controllers
             
             return View(notes);
         }
+        
+        public ActionResult MyLikedNotes() 
+        {
+            var notes = lm.List(s => s.LikedUser.Id == CurrentSession.User.Id).Select(s=>s.Note);
+            return View("Index",notes); //Index e git ve nopte yanında götür.
+        }
 
         // GET: Note/Details/5
         public ActionResult Details(int? id)

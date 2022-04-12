@@ -123,6 +123,110 @@ namespace MyNotes.MVC.Controllers
             }
             return View(errors);
         }
+
+        public ActionResult ShowProfile()
+        {
+            if (CurrentSession.User is MyNotesUser currentUser) res = mum.GetUserById(currentUser.Id);
+            
+            if (res.Errors.Count>0)
+            {
+                ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                {
+                    Title = "Hata olustu",
+                    Items = res.Errors
+                };
+                return View("Error",errorNotifyObj);
+            }
+
+            return View(res.Result);
+        }
+
+        public ActionResult EditProfile()
+        {
+            if (CurrentSession.User is MyNotesUser currentUser) res = mum.GetUserById(currentUser.Id);
+            {
+                if (res.Errors.Count>0)
+                {
+                    ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                    {
+                        Title = "Hata olustu",
+                        Items = res.Errors,
+                    };
+                    return View("Error", errorNotifyObj);
+
+
+                }
+            }
+            return View(res.Result);
+        }
+
+        public ActionResult SendEmail(LoginViewModel model)
+        {
+            model.Password = TempData["pass"].ToString();
+            model.UserName = TempData["uname"].ToString();
+            
+            mum.SendMail(model);
+            return RedirectToAction("Login");
+        }
+
+        [HttpPost]
+        public ActionResult EditProfile(MyNotesUser model, HttpPostedFileBase ProfileImage)
+        {
+            ModelState.Remove("ModifiedUserName");
+            ModelState.Remove("CreatedOn");
+            ModelState.Remove("ModifiedOn");
+            if (ModelState.IsValid)
+            {
+                if (ProfileImage != null && ProfileImage.ContentType == "image/jpeg" ||
+                    ProfileImage.ContentType == "image/jpg" || ProfileImage.ContentType == "image/png")
+                {
+                    string filename = $"user_{model.Id}.{ProfileImage.ContentType.Split('/')[1]}";
+                    ProfileImage.SaveAs(Server.MapPath($"~/images/{filename}"));//MapPath serverda gideceği padi yakalaması için
+                    model.ProfileImageFileName = filename; //$ string bir ifadenin içerisine dataverileri koyabilmek için kullandık.
+
+                }
+
+                res = mum.UpdateProfile(model);
+                if (res.Errors.Count > 0)
+                {
+                    ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                    {
+                        Title = "Profil Güncellenemedi.",
+                        Items = res.Errors,
+                        RedirectingUrl = "/Home/EditProfile"
+                    };
+                    return View("Error", errorNotifyObj);
+                }
+                CurrentSession.Set("login", res.Result);
+                return RedirectToAction("ShowProfile");
+
+            }
+
+            return View(model);
+        }
+
+        public ActionResult DeleteProfile()
+        {
+            if (CurrentSession.User is MyNotesUser currentUser)
+            {
+                res = mum.RemoveUserById(currentUser.Id);
+            }
+
+            if (res.Errors.Count > 0)
+            {
+                ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                {
+                    Title = "Profil silinemedi",
+                    Items = res.Errors,
+                    RedirectingUrl = "/home/ShowProfile"
+                };
+                return View("Error", errorNotifyObj);
+            }
+
+            CurrentSession.Clear();
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Index()
         {
             //Test test = new Test();

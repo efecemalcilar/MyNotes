@@ -29,16 +29,16 @@
                         Text = c.String(nullable: false, maxLength: 2000),
                         isDraft = c.Boolean(nullable: false),
                         LikeCount = c.Int(nullable: false),
+                        CategoryId = c.Int(),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(),
                         ModifiedUserName = c.String(),
-                        Category_Id = c.Int(),
                         Owner_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.tblCategories", t => t.Category_Id)
+                .ForeignKey("dbo.tblCategories", t => t.CategoryId)
                 .ForeignKey("dbo.tblMyNotesUsers", t => t.Owner_Id)
-                .Index(t => t.Category_Id)
+                .Index(t => t.CategoryId)
                 .Index(t => t.Owner_Id);
             
             CreateTable(
@@ -72,6 +72,7 @@
                         IsActive = c.Boolean(nullable: false),
                         ActivateGuid = c.Guid(nullable: false),
                         IsAdmin = c.Boolean(nullable: false),
+                        ProfileImageFileName = c.String(),
                         CreatedOn = c.DateTime(nullable: false),
                         ModifiedOn = c.DateTime(),
                         ModifiedUserName = c.String(),
@@ -101,13 +102,13 @@
             DropForeignKey("dbo.tblLikeds", "LikedUser_Id", "dbo.tblMyNotesUsers");
             DropForeignKey("dbo.tblComment", "Owner_Id", "dbo.tblMyNotesUsers");
             DropForeignKey("dbo.tblComment", "Note_Id", "dbo.tblNotes");
-            DropForeignKey("dbo.tblNotes", "Category_Id", "dbo.tblCategories");
+            DropForeignKey("dbo.tblNotes", "CategoryId", "dbo.tblCategories");
             DropIndex("dbo.tblLikeds", new[] { "Note_Id" });
             DropIndex("dbo.tblLikeds", new[] { "LikedUser_Id" });
             DropIndex("dbo.tblComment", new[] { "Owner_Id" });
             DropIndex("dbo.tblComment", new[] { "Note_Id" });
             DropIndex("dbo.tblNotes", new[] { "Owner_Id" });
-            DropIndex("dbo.tblNotes", new[] { "Category_Id" });
+            DropIndex("dbo.tblNotes", new[] { "CategoryId" });
             DropTable("dbo.tblLikeds");
             DropTable("dbo.tblMyNotesUsers");
             DropTable("dbo.tblComment");

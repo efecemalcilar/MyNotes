@@ -55,13 +55,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRepository.cs" />
-    <Compile Include="Migrations\202203281113471_InitialCreate.cs" />
-    <Compile Include="Migrations\202203281113471_InitialCreate.designer.cs">
-      <DependentUpon>202203281113471_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202204120839518_InitialCreate.cs" />
+    <Compile Include="Migrations\202204120839518_InitialCreate.designer.cs">
+      <DependentUpon>202204120839518_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202204101956590_Init.cs" />
-    <Compile Include="Migrations\202204101956590_Init.designer.cs">
-      <DependentUpon>202204101956590_Init.cs</DependentUpon>
+    <Compile Include="Migrations\202204121005598_Init.cs" />
+    <Compile Include="Migrations\202204121005598_Init.designer.cs">
+      <DependentUpon>202204121005598_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyInitializer.cs" />
@@ -88,11 +88,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202203281113471_InitialCreate.resx">
-      <DependentUpon>202203281113471_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202204120839518_InitialCreate.resx">
+      <DependentUpon>202204120839518_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202204101956590_Init.resx">
-      <DependentUpon>202204101956590_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202204121005598_Init.resx">
+      <DependentUpon>202204121005598_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
