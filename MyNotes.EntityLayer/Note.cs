@@ -11,7 +11,7 @@ namespace MyNotes.EntityLayer
     [Table("tblNotes")]
     public class Note:BaseEntity
     {
-        [StringLength(60),Required] //Required boş geçilmez demek.
+        [StringLength(160),Required] //Required boş geçilmez demek.
         public string Tittle { get; set; }
         [StringLength(2000),Required]
         public string Text { get; set; }
@@ -20,15 +20,16 @@ namespace MyNotes.EntityLayer
 
         public int LikeCount { get; set; } // Yazdığım yorumun almış oldugu beğeni sayısını takipedecek.
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
+        
 
         public virtual MyNotesUser Owner { get; set; }  //Notelarım user la bağlantılı olacak, virtual ezme için kullanılır (Ekstra özellik katabilmek içn). MyNotesUser classına gidip Owner ekliycek.
 
-
+        [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Liked> Likes { get; set; }
+        public virtual List<Comment> Comments { get; set; } = new List<Comment>();
+        public virtual List<Liked> Likes { get; set; } = new List<Liked>();
 
 
 

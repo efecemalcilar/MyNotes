@@ -27,16 +27,19 @@ namespace MyNotes.EntityLayer
         public string Password { get; set; }
 
         public bool IsActive { get; set; }
-        [Required]
-        public Guid ActivateGuid { get; set; }
+        [Required] public Guid ActivateGuid { get; set; } = Guid.NewGuid();
+
+        public bool IsDelete { get; set; } = false;
 
         public bool IsAdmin { get; set; }
 
-        public virtual IList<Note> Notes { get; set; } //List somut bir yapı Icollection soyut bir yapı List yerine Icollection,IList verebiliriz.
-        public virtual ICollection<Comment> Comments { get; set; } //List somut bir yapı Icollection soyut bir yapı List yerine Icollection,IList verebiliriz.
+        public string ProfileImageFileName { get; set; } 
+
+        public virtual List<Note> Notes { get; set; }  //List somut bir yapı Icollection soyut bir yapı List yerine Icollection,IList verebiliriz.
+        public virtual List<Comment> Comments { get; set; }  //List somut bir yapı Icollection soyut bir yapı List yerine Icollection,IList verebiliriz.
 
 
-        public virtual ICollection<Liked> Likes { get; set; }
+        public virtual List<Liked> Likes { get; set; } 
 
 
 
